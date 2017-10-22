@@ -1,5 +1,6 @@
+package random;
 
-class LCRandom extends Bases.Random
+class LCRandom extends random.Random
 {
     public final static long k_iLinear = ((long)1<<28) + 21;
 

@@ -1,4 +1,4 @@
-package Bases;
+package random;
 
 public class Random
 {

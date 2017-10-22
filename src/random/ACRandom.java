@@ -1,5 +1,6 @@
+package random;
 
-class ACRandom extends Bases.Random
+class ACRandom extends random.Random
 {
     public final static long k_iLinear = 31;
     public final static int k_iSizeOfCache = 55;

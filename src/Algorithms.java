@@ -1,3 +1,6 @@
+import random.GenerateRandom;
+
+
 import java.io.*;
 import java.util.ArrayList;
 
@@ -11,7 +14,6 @@ public class Algorithms {
     public static ArrayList<Chromosome> population = new ArrayList<>();
     public static ArrayList<Chromosome>OffspringPopulation = new ArrayList<>();
     public static ArrayList<Chromosome> Selection = new ArrayList<>();
-    public static LCRandom random = new LCRandom(100);
     public static final int InitialNumber = 100;
     public static final int MinShuffles = 20;
     public static final int MaxShuffles = 40;
@@ -123,7 +125,7 @@ public class Algorithms {
             addValueToList(population,newChromo);
             chromoIndex = population.indexOf(newChromo);
 
-            shuffles = getRandomNumber(MinShuffles, MaxShuffles);
+            shuffles = GenerateRandom.getRandomNumber(MinShuffles, MaxShuffles);
 
             exchangeMutation(chromoIndex, shuffles);
 
@@ -144,8 +146,8 @@ public class Algorithms {
 
         while(!done)
         {
-            gene1 = getRandomNumber(0, DestinationTask1 - 1);
-            gene2 = getExclusiveRandomNumber(DestinationTask1 - 1, gene1);
+            gene1 = GenerateRandom.getRandomNumber(0, DestinationTask1 - 1);
+            gene2 = GenerateRandom.getExclusiveRandomNumber(DestinationTask1 - 1, gene1);
 
             tempData = thisChromo.getDataTask1(gene1);
             thisChromo.setDataTask1(gene1,thisChromo.getDataTask1(gene2));
@@ -226,7 +228,7 @@ public class Algorithms {
         int popSize = population.size();
         double genTotal = 0.0;
         double selTotal = 0.0;
-        int maximumToSelect = getRandomNumber(MinSelection, MaxSelection);
+        int maximumToSelect = GenerateRandom.getRandomNumber(MinSelection, MaxSelection);
         double rouletteSpin = 0.0;
         Chromosome thisChromo = null;
         Chromosome thatChromo = null;
@@ -248,7 +250,7 @@ public class Algorithms {
 
         for(int i = 0; i < maximumToSelect; i++)
         {
-            rouletteSpin = getRandomNumber(0, 99);
+            rouletteSpin = GenerateRandom.getRandomNumber(0, 99);
             j = 0;
             selTotal = 0;
             done = false;
@@ -290,7 +292,7 @@ public class Algorithms {
         for(int i = 0; i < OFFSPRING_PER_GENERATION; i++)
         {
             parentA = chooseParent();
-            getRand = getRandomNumber(0, 100);
+            getRand = GenerateRandom.getRandomNumber(0, 100);
             if(getRand <= rmp * 100){
                 parentB = chooseParent(parentA);
                 newChromo1 = new Chromosome();
@@ -302,14 +304,14 @@ public class Algorithms {
 
                 partiallyMappedCrossover(parentA, parentB, newIndex1, newIndex2);
                 int Rand = 0;
-                Rand = getRandomNumber(0,99);
+                Rand = GenerateRandom.getRandomNumber(0,99);
                 if(Rand < 50){
                     newChromo1.setSkillFactor(population.get(parentA).getSkillFactor());
                 }
                 else {
                     newChromo1.setSkillFactor(population.get(parentB).getSkillFactor()) ;
                 }
-                Rand = getRandomNumber(0,99);
+                Rand = GenerateRandom.getRandomNumber(0,99);
                 if(Rand < 50){
                     newChromo2.setSkillFactor(population.get(parentA).getSkillFactor());
                 }
@@ -341,8 +343,8 @@ public class Algorithms {
         Chromosome thatChromo = population.get(chromB);
         Chromosome newChromo1 = OffspringPopulation.get(child1);
         Chromosome newChromo2 = OffspringPopulation.get(child2);
-        int crossPoint1 = getRandomNumber(0, DestinationTask1 - 1);
-        int crossPoint2 = getExclusiveRandomNumber(DestinationTask1 - 1, crossPoint1);
+        int crossPoint1 = GenerateRandom.getRandomNumber(0, DestinationTask1 - 1);
+        int crossPoint2 = GenerateRandom.getExclusiveRandomNumber(DestinationTask1 - 1, crossPoint1);
 
         if(crossPoint2 < crossPoint1){
             j = crossPoint1;
@@ -400,7 +402,7 @@ public class Algorithms {
 
         while(!done)
         {
-            parent = getRandomNumber(0, population.size() - 1);
+            parent = GenerateRandom.getRandomNumber(0, population.size() - 1);
             thisChromo = population.get(parent);
             if(thisChromo.isSelected()){
                 done = true;
@@ -417,7 +419,7 @@ public class Algorithms {
 
         while(!done)
         {
-            parent = getRandomNumber(0, population.size() - 1);
+            parent = GenerateRandom.getRandomNumber(0, population.size() - 1);
             if(parent != parentA){
                 thisChromo = population.get(parent);
                 if(thisChromo.isSelected()){
@@ -440,8 +442,8 @@ public class Algorithms {
 
         while(!done)
         {
-            gene1 = getRandomNumber(0, DestinationTask1 - 1);
-            gene2 = getExclusiveRandomNumber(DestinationTask1 - 1, gene1);
+            gene1 = GenerateRandom.getRandomNumber(0, DestinationTask1 - 1);
+            gene2 = GenerateRandom.getExclusiveRandomNumber(DestinationTask1 - 1, gene1);
 
 
             tempData = thisChromo.getDataTask1(gene1);
@@ -519,27 +521,7 @@ public class Algorithms {
 
     }
 
-    public static int getRandomNumber(final int low, final int high)
-    {
-        return random.NextInt(high-low)+low;
-    }
 
-
-    public static int getExclusiveRandomNumber(final int high, final int except)
-    {
-        boolean done = false;
-        int getRand = 0;
-
-        while(!done)
-        {
-            getRand = random.NextInt(high);
-            if(getRand != except){
-                done = true;
-            }
-        }
-
-        return getRand;
-    }
 
     public void Decoding(Chromosome chromosome){
         int j = 0;
